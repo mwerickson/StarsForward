@@ -14,6 +14,16 @@
 
     <StackLayout Orientation="Vertical">
         <CollectionView ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedItem}">
+            <CollectionView.EmptyViewTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical">
+                        <Label
+                            HorizontalOptions="CenterAndExpand"
+                            Text="No events found in the local database. Please select NEW"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.EmptyViewTemplate>
             <CollectionView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout Orientation="Vertical" Spacing="1">

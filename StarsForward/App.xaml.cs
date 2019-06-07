@@ -19,17 +19,26 @@ namespace StarsForward
             InitializeComponent();
 
             ConfigureIOC();
+            CreateObjectMaps();
             MainPage = LoadMasterDetail();
         }
 
         public FreshMasterDetailNavigationContainer LoadMasterDetail()
         {
-            var masterDetailNav = new FreshMasterDetailNavigationContainer();
-            masterDetailNav.Init("Menu", "hamburger.png");
-            masterDetailNav.AddPage<EventsPageModel>("Events", null);
-            masterDetailNav.AddPage<DonorsPageModel>("Donors", null);
-            masterDetailNav.AddPage<CollectionPageModel>("Collection", null);
-            return masterDetailNav;
+            try
+            {
+                var masterDetailNav = new FreshMasterDetailNavigationContainer();
+                masterDetailNav.Init("Menu", "hamburger.png");
+                masterDetailNav.AddPage<EventsPageModel>("Events", null);
+                masterDetailNav.AddPage<DonorsPageModel>("Donors", null);
+                masterDetailNav.AddPage<CollectionPageModel>("Collection", null);
+                return masterDetailNav;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
         public void ConfigureIOC()
         {

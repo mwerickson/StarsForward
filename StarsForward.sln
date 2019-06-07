@@ -5,7 +5,9 @@ VisualStudioVersion = 16.0.28922.388
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarsForward.iOS", "StarsForward.iOS\StarsForward.iOS.csproj", "{5BC57883-701C-481E-AA31-9F4459C3170A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StarsForward", "StarsForward\StarsForward.csproj", "{86F205C9-93AB-4017-A363-E3229CA111F7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "StarsForward", "StarsForward\StarsForward.csproj", "{86F205C9-93AB-4017-A363-E3229CA111F7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "References", "References", "{545441A2-F3D3-4A38-AE9B-238B6734FA78}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

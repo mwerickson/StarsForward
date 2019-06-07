@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Net;
+using AutoMapper;
 using FreshMvvm;
+using FreshMvvm.Popups;
 using PropertyChanged;
+using StarsForward.Data.Interfaces;
 using StarsForward.Data.Models;
 using StarsForward.Pages;
 using StarsForward.ViewModels;
@@ -13,8 +16,13 @@ namespace StarsForward.PageModels
     [AddINotifyPropertyChangedInterface]
     public class EventsPageModel : FreshBasePageModel
     {
-        public EventsPageModel()
+        private readonly IMapper _mapper;
+        private readonly IEventRepository _eventRepository;
+
+        public EventsPageModel(IMapper mapper, IEventRepository eventRepository)
         {
+            _mapper = mapper;
+            _eventRepository = eventRepository;
         }
 
         public ObservableCollection<EventViewModel> Events { get; set; }
@@ -52,10 +60,7 @@ namespace StarsForward.PageModels
         {
             get
             {
-                return new Command(() =>
-                {
-                    
-                });
+                return new Command(async () => { await CoreMethods.PushPopupPageModel<NewEventPopupPageModel>(); });
             }
         }
 
@@ -66,7 +71,7 @@ namespace StarsForward.PageModels
         // OVERRIDES
         public override void Init(object initData)
         {
-            base.Init(initData);
+            Events = new ObservableCollection<EventViewModel>();
         }
 
         protected override void ViewIsAppearing(object sender, EventArgs e)
