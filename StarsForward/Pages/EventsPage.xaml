@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StarsForward.Pages.EventsPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="Events"
+    mc:Ignorable="d">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding NewEventCommand}" Text="New" />
+    </ContentPage.ToolbarItems>
+
+    <StackLayout Orientation="Vertical">
+        <CollectionView ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedItem}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical" Spacing="1">
+                        <Label
+                            FontSize="Large"
+                            HorizontalOptions="FillAndExpand"
+                            Text="{Binding Name}" />
+                        <Label
+                            FontSize="Small"
+                            Text="{Binding EventDatesText}"
+                            TextColor="Gray" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

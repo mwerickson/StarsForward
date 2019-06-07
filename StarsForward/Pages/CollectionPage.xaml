@@ -1,0 +1,183 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StarsForward.Pages.CollectionPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="LabelPromptStyle" TargetType="Label">
+                <Setter Property="Label.FontSize" Value="24" />
+            </Style>
+            <Style x:Key="LabelEntryStyle" TargetType="Label">
+                <Setter Property="Entry.HeightRequest" Value="50" />
+            </Style>
+            <Style x:Key="EditorStyle" TargetType="Editor">
+                <Setter Property="Editor.HeightRequest" Value="150" />
+            </Style>
+            <Style x:Key="ButtonStyle" TargetType="Button">
+                <Setter Property="Button.BackgroundColor" Value="#003366" />
+                <Setter Property="Button.TextColor" Value="White" />
+                <Setter Property="Button.FontSize" Value="32" />
+                <Setter Property="Button.WidthRequest" Value="150" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout Orientation="Vertical">
+        <Image HorizontalOptions="CenterAndExpand" Source="logo.png" />
+        <Grid
+            Padding="25"
+            HorizontalOptions="FillAndExpand"
+            RowSpacing="40">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="First Name" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.FirstName, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Last Name" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.LastName, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Address" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Address1, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Address line 2" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Address2, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="4"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="City" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.City, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="4"
+                Grid.Column="2"
+                Grid.ColumnSpan="2"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="State" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.State, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="4"
+                Grid.Column="4"
+                Grid.ColumnSpan="2"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Zip code" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Zip, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="5"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Phone number" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Phone, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="6"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Email" />
+                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Email, Mode=TwoWay}" />
+            </StackLayout>
+
+            <StackLayout Grid.Row="7" Grid.ColumnSpan="6">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Areas of Interest" />
+                <StackLayout Orientation="Horizontal">
+                    <!--<controls:CheckBox Text="Becoming a volunteer" Type="Material"/>-->
+                </StackLayout>
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="8"
+                Grid.Column="0"
+                Grid.ColumnSpan="6"
+                Orientation="Vertical"
+                Spacing="1">
+                <Label Style="{StaticResource LabelPromptStyle}" Text="Other Information" />
+                <Frame
+                    Padding="0"
+                    BorderColor="LightGray"
+                    HasShadow="False">
+                    <Editor
+                        AutoSize="TextChanges"
+                        Placeholder="Enter other information here"
+                        Style="{StaticResource EditorStyle}"
+                        Text="{Binding Donor.Email, Mode=TwoWay}" />
+                </Frame>
+            </StackLayout>
+
+
+
+
+
+        </Grid>
+        <Button
+            Command="{Binding SubmitCommand}"
+            Style="{StaticResource ButtonStyle}"
+            Text="Submit"
+            Visual="Material" />
+    </StackLayout>
+</ContentPage>
