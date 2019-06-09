@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="StarsForward.Pages.EventPage"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d">
+
+    <StackLayout Padding="15,25,15,0" Orientation="Vertical">
+        <Label
+            FontAttributes="Bold"
+            FontSize="Large"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding Event.Name}" />
+        <Label
+            FontSize="Medium"
+            HorizontalOptions="CenterAndExpand"
+            Text="{Binding Event.EventDatesText}"
+            TextColor="Gray" />
+
+        <StackLayout Padding="15,30,15,30" Orientation="Horizontal">
+            <Button
+                Command="{Binding UpdateCommand}"
+                HorizontalOptions="CenterAndExpand"
+                Text="Update"
+                Visual="Material" />
+            <Button
+                Command="{Binding CollectCommand}"
+                HorizontalOptions="CenterAndExpand"
+                Text="Start Collecting"
+                Visual="Material" />
+            <Button
+                Command="{Binding ExportCommand}"
+                HorizontalOptions="CenterAndExpand"
+                IsEnabled="{Binding ExportEnabled}"
+                Text="{Binding ExportText}"
+                Visual="Material" />
+        </StackLayout>
+
+        <BoxView
+            HeightRequest="1"
+            HorizontalOptions="FillAndExpand"
+            Color="#A7A9A8" />
+
+        <Label FontSize="Large" Text="Donors List" />
+        <CollectionView ItemsSource="{Binding Event.Donors}" EmptyView="No donors for this event yet!">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical" />
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

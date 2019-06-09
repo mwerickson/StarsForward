@@ -1,12 +1,19 @@
 ﻿using System;
 using Realms;
+using StarsForward.Enums;
 
 namespace StarsForward.Data.Models
 {
     public class Donor : RealmObject
     {
+        public Donor()
+        {
+            this.RecordStatus = RecordStatusType.Active;
+        }
+
+
         [PrimaryKey]
-        public long Id { get; set; }
+        public string Id { get; set; }  // guid
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address1 { get; set; }
@@ -31,5 +38,13 @@ namespace StarsForward.Data.Models
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset? DateModified { get; set; }
         public DateTimeOffset? DateExported { get; set; }
+        public int RecordStatusRaw { get; set; }
+
+        public RecordStatusType RecordStatus
+        {
+            get => (RecordStatusType)RecordStatusRaw;
+            set => RecordStatusRaw = (int)value;
+        }
+
     }
 }

@@ -1,10 +1,22 @@
 ﻿using System;
+using System.Collections.Generic;
+using FluentValidation;
+using Realms;
+using StarsForward.Validators;
 
 namespace StarsForward.ViewModels
 {
     public class DonorViewModel
     {
-        public long Id { get; set; }
+        private readonly IValidator _validator;
+
+        public DonorViewModel()
+        {
+            _validator = new DonorValidator();    
+        }
+
+
+        public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Address1 { get; set; }
@@ -29,5 +41,63 @@ namespace StarsForward.ViewModels
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset? DateModified { get; set; }
         public DateTimeOffset? DateExported { get; set; }
+
+        public List<string> ValidationMessages { get; set; }
+
+        public bool IsValid()
+        {
+            var validationResults = _validator.Validate(this);
+
+            if (validationResults.IsValid) return true;
+
+            App.Current.MainPage.DisplayAlert("Missing or Incorrect Information",
+                validationResults.Errors[0].ErrorMessage, "Ok");
+
+            return false;
+
+            //ValidationMessages = new List<string>();
+
+            //if (string.IsNullOrEmpty(FirstName))
+            //{
+            //    ValidationMessages.Add("First Name is required. ");
+            //}
+
+            //if (string.IsNullOrEmpty(LastName))
+            //{
+            //    ValidationMessages.Add("Last Name is required. ");
+            //}
+
+            //if (string.IsNullOrEmpty(Address1))
+            //{
+            //    ValidationMessages.Add("Address is required. ");
+            //}
+
+            //if (string.IsNullOrEmpty(City))
+            //{
+            //    ValidationMessages.Add("City is required. ");
+            //}
+
+            //if (string.IsNullOrEmpty(State))
+            //{
+            //    ValidationMessages.Add("State is required. ");
+            //}
+
+            //if (string.IsNullOrEmpty(Zip))
+            //{
+            //    ValidationMessages.Add("Zip code is required. ");
+            //}
+
+            //if (string.IsNullOrEmpty(Phone))
+            //{
+            //    ValidationMessages.Add("Phone number is required. ");
+            //}
+
+            //if (string.IsNullOrEmpty(Email))
+            //{
+            //    ValidationMessages.Add("Email address is required. ");
+            //}
+
+            //return ValidationMessages.Count == 0;
+        }
     }
 }

@@ -1,12 +1,14 @@
 ﻿using System;
 using System.Net;
+using Acr.UserDialogs;
 using AutoMapper;
 using FreshMvvm;
 using PropertyChanged;
 using Xamarin.Forms;
-using FreshMvvm.Popups;
 using StarsForward.Data.Interfaces;
 using StarsForward.Data.Models;
+using StarsForward.Extensions;
+using StarsForward.Messages;
 using StarsForward.ViewModels;
 
 namespace StarsForward.PageModels
@@ -43,8 +45,14 @@ namespace StarsForward.PageModels
             {
                 return new Command(async () =>
                 {
+                    Event.StartDate = Event.StartDatePicked;
+                    Event.EndDate = Event.EndDatePicked;
                     var model = _mapper.Map<Event>(Event);
-                    _eventRepository.AddItem(model);
+                    _eventRepository.Add(model);
+
+                    UserDialogs.Instance.Toast("Event has been saved successfully!");
+
+                    MessagingCenter.Send(new RefreshEventsMessage(), RefreshEventsMessage.Message);
                     await CoreMethods.PopPopupPageModel();
                 });
             }

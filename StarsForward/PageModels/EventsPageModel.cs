@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Net;
 using AutoMapper;
 using FreshMvvm;
-using FreshMvvm.Popups;
 using PropertyChanged;
+using Realms;
 using StarsForward.Data.Interfaces;
 using StarsForward.Data.Models;
+using StarsForward.Extensions;
+using StarsForward.Messages;
 using StarsForward.Pages;
 using StarsForward.ViewModels;
 using Xamarin.Forms;
@@ -23,6 +27,11 @@ namespace StarsForward.PageModels
         {
             _mapper = mapper;
             _eventRepository = eventRepository;
+
+            MessagingCenter.Subscribe<RefreshEventsMessage>(this, RefreshEventsMessage.Message, message =>
+            {
+                LoadDataCommand.Execute(null);
+            });
         }
 
         public ObservableCollection<EventViewModel> Events { get; set; }
@@ -34,10 +43,11 @@ namespace StarsForward.PageModels
             get { return _selectedEvent; }
             set
             {
-                _selectedEvent = value;
-                if (value == null) return;
+                if (_selectedEvent != value)
+                {
+                    _selectedEvent = value;
+                }
                 ItemSelectedCommand.Execute(SelectedItem);
-                SelectedItem = null;
             }
         }
 
@@ -50,8 +60,7 @@ namespace StarsForward.PageModels
             {
                 return new Command<EventViewModel>(async (item) =>
                 {
-                    // start collecting donor information
-                    await CoreMethods.PushPageModel<CollectionPageModel>(item);
+                    await CoreMethods.PushPageModel<EventPageModel>(item);
                 });
             }
         }
@@ -61,6 +70,22 @@ namespace StarsForward.PageModels
             get
             {
                 return new Command(async () => { await CoreMethods.PushPopupPageModel<NewEventPopupPageModel>(); });
+            }
+        }
+
+        public Command LoadDataCommand
+        {
+            get
+            {
+                return new Command(() =>
+                {
+                    var items = _eventRepository.List();
+                    if (items != null)
+                    {
+                        var events = _mapper.Map<List<EventViewModel>>(items);
+                        Events = new ObservableCollection<EventViewModel>(events);
+                    }
+                });
             }
         }
 
@@ -74,9 +99,20 @@ namespace StarsForward.PageModels
             Events = new ObservableCollection<EventViewModel>();
         }
 
+        public override void ReverseInit(object returnedData)
+        {
+            if (returnedData is EventViewModel model)
+            {
+                // refresh the list
+                LoadDataCommand.Execute(null);
+            }
+        }
+
         protected override void ViewIsAppearing(object sender, EventArgs e)
         {
             base.ViewIsAppearing(sender, e);
+
+            LoadDataCommand.Execute(null);
         }
 
     }

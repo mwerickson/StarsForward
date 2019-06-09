@@ -1,9 +1,14 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
+using Acr.UserDialogs;
 using AutoMapper;
 using FreshMvvm;
 using PropertyChanged;
+using Realms;
 using StarsForward.Data.Interfaces;
+using StarsForward.Data.Models;
+using StarsForward.Extensions;
 using StarsForward.ViewModels;
 using Xamarin.Forms;
 
@@ -24,17 +29,16 @@ namespace StarsForward.PageModels
         public DonorViewModel Donor { get; set; }
         public EventViewModel Event { get; set; }
 
+        public string Message { get; set; }
+
 
         #region COMMANDS
 
-        public Command ExitCommand
+        public Command ExitCollectionCommand
         {
             get
             {
-                return new Command(() =>
-                {
-                    // switch to admin page
-                });
+                return new Command(async () => { await CoreMethods.PopPageModel(true); });
             }
         }
 
@@ -42,12 +46,27 @@ namespace StarsForward.PageModels
         {
             get
             {
-                return new Command(() =>
+                return new Command(async () =>
                 {
+                    // validate the donor record
+                    if (!Donor.IsValid())
+                    {
+                        return;
+                    }
+
                     // save current donor   
+                    var entity = _mapper.Map<Donor>(Donor);
+                    if (entity != null)
+                    {
+                        _donorRepository.Add(entity);
+                    }
 
                     // start a new one
-                    Donor = new DonorViewModel();
+                    ClearForm();
+
+                    // thank the donor!
+                    await CoreMethods.PushPopupPageModel<ThankYouPopupPageModel>();
+
                 });
             }
         }
@@ -55,10 +74,18 @@ namespace StarsForward.PageModels
         #endregion
 
 
+        private void ClearForm()
+        {
+            Donor = new DonorViewModel();
+        }
+
+
 
         // OVERRIDES
         public override void Init(object initData)
         {
+            ClearForm();
+
             if (initData is EventViewModel model)
             {
                 Event = model;

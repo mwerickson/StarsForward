@@ -13,20 +13,16 @@
     </ContentPage.ToolbarItems>
 
     <StackLayout Orientation="Vertical">
-        <CollectionView ItemsSource="{Binding Events}" SelectedItem="{Binding SelectedItem}">
-            <CollectionView.EmptyViewTemplate>
-                <DataTemplate>
-                    <StackLayout Orientation="Vertical">
-                        <Label
-                            HorizontalOptions="CenterAndExpand"
-                            Text="No events found in the local database. Please select NEW"
-                            VerticalOptions="CenterAndExpand" />
-                    </StackLayout>
-                </DataTemplate>
-            </CollectionView.EmptyViewTemplate>
+        <CollectionView
+            ItemsSource="{Binding Events}"
+            SelectedItem="{Binding SelectedItem, Mode=TwoWay}"
+            SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Orientation="Vertical" Spacing="1">
+                    <StackLayout
+                        Padding="15,10,15,10"
+                        Orientation="Vertical"
+                        Spacing="1">
                         <Label
                             FontSize="Large"
                             HorizontalOptions="FillAndExpand"
@@ -35,9 +31,24 @@
                             FontSize="Small"
                             Text="{Binding EventDatesText}"
                             TextColor="Gray" />
+                        <BoxView
+                            HeightRequest="1"
+                            HorizontalOptions="FillAndExpand"
+                            Color="#A7A9A8" />
                     </StackLayout>
                 </DataTemplate>
             </CollectionView.ItemTemplate>
+            <CollectionView.EmptyViewTemplate>
+                <DataTemplate>
+                    <StackLayout Orientation="Vertical">
+                        <Label
+                            HorizontalOptions="CenterAndExpand"
+                            Text="No events found in the local database. Please select NEW"
+                            TextColor="Black"
+                            VerticalOptions="CenterAndExpand" />
+                    </StackLayout>
+                </DataTemplate>
+            </CollectionView.EmptyViewTemplate>
         </CollectionView>
     </StackLayout>
 </ContentPage>

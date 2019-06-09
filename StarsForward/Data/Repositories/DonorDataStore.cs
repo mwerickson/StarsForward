@@ -1,46 +1,76 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
+using AutoMapper.Mappers;
 using StarsForward.Data.Helpers;
 using StarsForward.Data.Interfaces;
 using StarsForward.Data.Models;
+using StarsForward.Enums;
 
 namespace StarsForward.Data.Repositories
 {
     public class DonorDataStore : IDonorRepository
     {
-        #region IDatastore Implementation
-
-        public bool AddItem(Donor item)
+        public Donor GetById(string id)
         {
-            var context = RealmHelper.GetInstance();
-            // TODO: get highest ID value and increment
-            throw new System.NotImplementedException();
+            var db = RealmHelper.GetInstance();
+            return db.Find<Donor>(id);
         }
 
-        public bool UpdateItem(Donor item)
+        public IEnumerable<Donor> List()
         {
-            throw new System.NotImplementedException();
+            var db = RealmHelper.GetInstance();
+            return db.All<Donor>().ToList();
         }
 
-        public bool DeleteItem(long id)
+        public IEnumerable<Donor> List(Expression<Func<Donor, bool>> predicate)
         {
-            throw new System.NotImplementedException();
+            var db = RealmHelper.GetInstance();
+            return db.All<Donor>().Where(predicate).ToList();
         }
 
-        public Donor GetItem(long id)
+        public Donor Add(Donor entity)
         {
-            throw new System.NotImplementedException();
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                if (string.IsNullOrEmpty(entity.Id))
+                {
+                    entity.Id = Guid.NewGuid().ToString();
+                }
+
+                db.Add(entity);
+            });
+            return entity;
         }
 
-        public IEnumerable<Donor> GetItems(bool forceRefresh = false)
+        public void Delete(Donor entity)
         {
-            throw new System.NotImplementedException();
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                entity.RecordStatus = RecordStatusType.Deleted;
+            });
         }
 
-        #endregion
-
-        public IEnumerable<Donor> GetItemsByEventAsync(long eventId, bool forceRefresh = false)
+        public void DeleteById(string id)
         {
-            throw new System.NotImplementedException();
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                var donor = db.Find<Donor>(id);
+                if (donor != null)
+                {
+                    donor.RecordStatus = RecordStatusType.Deleted;
+                }
+            });
+        }
+
+        public Donor Find(Expression<Func<Donor, bool>> predicate)
+        {
+            var db = RealmHelper.GetInstance();
+            return db.All<Donor>().Where(predicate).FirstOrDefault();
         }
     }
 }

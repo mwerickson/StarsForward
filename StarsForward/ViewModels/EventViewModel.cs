@@ -6,7 +6,13 @@ namespace StarsForward.ViewModels
 {
     public class EventViewModel
     {
-        public long Id { get; set; }
+        public EventViewModel()
+        {
+            this.StartDatePicked = DateTime.Now;
+            this.EndDatePicked = DateTime.Now;
+        }
+
+        public string Id { get; set; }
         public string Name { get; set; }
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset EndDate { get; set; }
@@ -15,5 +21,10 @@ namespace StarsForward.ViewModels
 
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset? DateModified { get; set; }
+
+        public string EventDatesText => $"{StartDate:D} through {EndDate:D}";
+
+        public DateTime StartDatePicked { get; set; }
+        public DateTime EndDatePicked { get; set; }
     }
 }

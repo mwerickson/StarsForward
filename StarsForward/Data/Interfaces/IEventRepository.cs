@@ -2,7 +2,7 @@
 
 namespace StarsForward.Data.Interfaces
 {
-    public interface IEventRepository : IDataStore<Event>
+    public interface IEventRepository : IRepository<Event>
     {
         
     }

@@ -59,6 +59,9 @@ namespace StarsForward
             {
                 cfg.CreateMap<Donor, DonorViewModel>();
                 cfg.CreateMap<Event, EventViewModel>();
+
+                cfg.CreateMap<EventViewModel, Event>();
+                cfg.CreateMap<DonorViewModel, Donor>();
             });
         }
 

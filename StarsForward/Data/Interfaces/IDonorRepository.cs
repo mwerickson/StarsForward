@@ -1,9 +1,10 @@
-﻿using StarsForward.Data.Models;
+﻿using System.Collections.Generic;
+using Realms;
+using StarsForward.Data.Models;
 
 namespace StarsForward.Data.Interfaces
 {
-    public interface IDonorRepository : IDataStore<Donor>
+    public interface IDonorRepository : IRepository<Donor>
     {
-        
     }
 }

@@ -28,11 +28,20 @@
     </ContentPage.Resources>
 
     <StackLayout Orientation="Vertical">
-        <Image HorizontalOptions="CenterAndExpand" Source="logo.png" />
+        <Image HorizontalOptions="CenterAndExpand" Source="logo.png">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ExitCollectionCommand}" NumberOfTapsRequired="4" />
+            </Image.GestureRecognizers>
+        </Image>
+        <Label
+            HorizontalOptions="FillAndExpand"
+            IsVisible="{Binding ValidationMessageVisible}"
+            Text="{Binding Donor.ValidationMessage}"
+            TextColor="Red" />
         <Grid
             Padding="25"
             HorizontalOptions="FillAndExpand"
-            RowSpacing="40">
+            RowSpacing="30">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
@@ -56,7 +65,7 @@
             <StackLayout
                 Grid.Row="0"
                 Grid.Column="0"
-                Grid.ColumnSpan="6"
+                Grid.ColumnSpan="3"
                 Orientation="Vertical"
                 Spacing="1">
                 <Label Style="{StaticResource LabelPromptStyle}" Text="First Name" />
@@ -64,9 +73,9 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="6"
+                Grid.Row="0"
+                Grid.Column="3"
+                Grid.ColumnSpan="3"
                 Orientation="Vertical"
                 Spacing="1">
                 <Label Style="{StaticResource LabelPromptStyle}" Text="Last Name" />
@@ -74,7 +83,7 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="2"
+                Grid.Row="1"
                 Grid.Column="0"
                 Grid.ColumnSpan="6"
                 Orientation="Vertical"
@@ -84,7 +93,7 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="3"
+                Grid.Row="2"
                 Grid.Column="0"
                 Grid.ColumnSpan="6"
                 Orientation="Vertical"
@@ -94,7 +103,7 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="4"
+                Grid.Row="3"
                 Grid.Column="0"
                 Grid.ColumnSpan="2"
                 Orientation="Vertical"
@@ -104,7 +113,7 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="4"
+                Grid.Row="3"
                 Grid.Column="2"
                 Grid.ColumnSpan="2"
                 Orientation="Vertical"
@@ -114,7 +123,7 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="4"
+                Grid.Row="3"
                 Grid.Column="4"
                 Grid.ColumnSpan="2"
                 Orientation="Vertical"
@@ -124,9 +133,9 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="5"
+                Grid.Row="4"
                 Grid.Column="0"
-                Grid.ColumnSpan="6"
+                Grid.ColumnSpan="3"
                 Orientation="Vertical"
                 Spacing="1">
                 <Label Style="{StaticResource LabelPromptStyle}" Text="Phone number" />
@@ -134,16 +143,16 @@
             </StackLayout>
 
             <StackLayout
-                Grid.Row="6"
-                Grid.Column="0"
-                Grid.ColumnSpan="6"
+                Grid.Row="4"
+                Grid.Column="3"
+                Grid.ColumnSpan="3"
                 Orientation="Vertical"
                 Spacing="1">
                 <Label Style="{StaticResource LabelPromptStyle}" Text="Email" />
                 <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Email, Mode=TwoWay}" />
             </StackLayout>
 
-            <StackLayout Grid.Row="7" Grid.ColumnSpan="6">
+            <StackLayout Grid.Row="5" Grid.ColumnSpan="6">
                 <Label Style="{StaticResource LabelPromptStyle}" Text="Areas of Interest" />
                 <StackLayout Orientation="Horizontal">
                     <!--<controls:CheckBox Text="Becoming a volunteer" Type="Material"/>-->
@@ -168,11 +177,6 @@
                         Text="{Binding Donor.Email, Mode=TwoWay}" />
                 </Frame>
             </StackLayout>
-
-
-
-
-
         </Grid>
         <Button
             Command="{Binding SubmitCommand}"
