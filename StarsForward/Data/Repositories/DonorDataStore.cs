@@ -72,5 +72,30 @@ namespace StarsForward.Data.Repositories
             var db = RealmHelper.GetInstance();
             return db.All<Donor>().Where(predicate).FirstOrDefault();
         }
+
+        public void AddToEvent(Event e, Donor entity)
+        {
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                var evnt = db.Find<Event>(e.Id);
+                entity.Id = Guid.NewGuid().ToString();
+                evnt.Donors.Add(entity);
+            });
+        }
+
+        public void Exported(List<Donor> entities)
+        {
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                foreach (var entity in entities)
+                {
+                    var donor = db.Find<Donor>(entity.Id);
+                    donor.DateExported = DateTimeOffset.Now;
+                }
+            });
+
+        }
     }
 }

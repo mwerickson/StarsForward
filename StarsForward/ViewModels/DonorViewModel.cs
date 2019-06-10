@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using Realms;
 using StarsForward.Validators;
@@ -19,11 +20,13 @@ namespace StarsForward.ViewModels
         public string Id { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        [Display(Name = "Address Line 1")]
         public string Address1 { get; set; }
         public string Address2 { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string Zip { get; set; }
+        [Display(Name = "Phone Number")]
         public string Phone { get; set; }
         public string Email { get; set; }
         public string AdditionalInformation { get; set; }
@@ -43,6 +46,14 @@ namespace StarsForward.ViewModels
         public DateTimeOffset? DateExported { get; set; }
 
         public List<string> ValidationMessages { get; set; }
+
+        public string FullName => $"{LastName}, {FirstName}";
+        public string FullAddress => $"{Address1}, {City} {State}, {Zip}";
+        public string ContactInfo => $"Phone: {Phone}  Email: {Email}";
+
+        public string DateCreatedText => DateCreated.ToString("g");
+        public string DateModifiedText => DateModified?.ToString("g") ?? "n/a";
+        public string DateExportedText => DateExported?.ToString("g") ?? "n/a";
 
         public bool IsValid()
         {

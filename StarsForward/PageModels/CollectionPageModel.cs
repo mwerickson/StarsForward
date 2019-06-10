@@ -54,11 +54,15 @@ namespace StarsForward.PageModels
                         return;
                     }
 
+                    var e = _mapper.Map<Event>(Event);
+
                     // save current donor   
+                    Donor.DateCreated = DateTimeOffset.Now;
+                    Donor.DateModified = DateTimeOffset.Now;
                     var entity = _mapper.Map<Donor>(Donor);
                     if (entity != null)
                     {
-                        _donorRepository.Add(entity);
+                        _donorRepository.AddToEvent(e, entity);
                     }
 
                     // start a new one

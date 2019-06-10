@@ -17,7 +17,7 @@ namespace StarsForward.ViewModels
         public DateTimeOffset StartDate { get; set; }
         public DateTimeOffset EndDate { get; set; }
 
-        public List<Donor> Donors { get; set; }
+        public List<DonorViewModel> Donors { get; set; }
 
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset? DateModified { get; set; }

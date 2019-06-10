@@ -33,7 +33,7 @@ namespace StarsForward.Data.Repositories
         {
             entity.RecordStatus = RecordStatusType.Active;
             var db = RealmHelper.GetInstance();
-            
+
             db.Write(() =>
             {
                 if (string.IsNullOrEmpty(entity.Id))
@@ -68,6 +68,27 @@ namespace StarsForward.Data.Repositories
         {
             var db = RealmHelper.GetInstance();
             return db.All<Event>().Where(predicate).FirstOrDefault();
+        }
+
+        public int DeleteExported(string eventId)
+        {
+            var db = RealmHelper.GetInstance();
+            var evnt = db.Find<Event>(eventId);
+            var i = 0;
+            if (evnt != null)
+            {
+                var donorsToDelete = evnt.Donors.Where(x => x.DateExported != null).ToList();
+                db.Write(() =>
+                {
+                    foreach (var donor in donorsToDelete)
+                    {
+                        db.Remove(donor);
+                        i++;
+                    }
+                });
+            }
+
+            return i;
         }
     }
 }

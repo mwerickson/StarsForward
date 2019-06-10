@@ -6,5 +6,7 @@ namespace StarsForward.Data.Interfaces
 {
     public interface IDonorRepository : IRepository<Donor>
     {
+        void AddToEvent(Event e, Donor entity);
+        void Exported(List<Donor> entities);
     }
 }

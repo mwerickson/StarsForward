@@ -3,6 +3,8 @@
     x:Class="StarsForward.Pages.CollectionPage"
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:behaviors="clr-namespace:StarsForward.Behaviors;assembly=StarsForward"
+    xmlns:controls="clr-namespace:Plugin.InputKit.Shared.Controls;assembly=Plugin.InputKit"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
@@ -27,161 +29,275 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <StackLayout Orientation="Vertical">
-        <Image HorizontalOptions="CenterAndExpand" Source="logo.png">
-            <Image.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding ExitCollectionCommand}" NumberOfTapsRequired="4" />
-            </Image.GestureRecognizers>
-        </Image>
-        <Label
-            HorizontalOptions="FillAndExpand"
-            IsVisible="{Binding ValidationMessageVisible}"
-            Text="{Binding Donor.ValidationMessage}"
-            TextColor="Red" />
-        <Grid
-            Padding="25"
-            HorizontalOptions="FillAndExpand"
-            RowSpacing="30">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+    <ScrollView>
+        <StackLayout Orientation="Vertical">
+            <Image HorizontalOptions="CenterAndExpand" Source="logo.png">
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ExitCollectionCommand}" NumberOfTapsRequired="4" />
+                </Image.GestureRecognizers>
+            </Image>
+            <Grid
+                Padding="25"
+                HorizontalOptions="FillAndExpand"
+                RowSpacing="30">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-            <StackLayout
-                Grid.Row="0"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="First Name" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.FirstName, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="0"
-                Grid.Column="3"
-                Grid.ColumnSpan="3"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Last Name" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.LastName, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="1"
-                Grid.Column="0"
-                Grid.ColumnSpan="6"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Address" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Address1, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="2"
-                Grid.Column="0"
-                Grid.ColumnSpan="6"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Address line 2" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Address2, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="3"
-                Grid.Column="0"
-                Grid.ColumnSpan="2"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="City" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.City, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="3"
-                Grid.Column="2"
-                Grid.ColumnSpan="2"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="State" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.State, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="3"
-                Grid.Column="4"
-                Grid.ColumnSpan="2"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Zip code" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Zip, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="4"
-                Grid.Column="0"
-                Grid.ColumnSpan="3"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Phone number" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Phone, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout
-                Grid.Row="4"
-                Grid.Column="3"
-                Grid.ColumnSpan="3"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Email" />
-                <Entry Style="{StaticResource LabelEntryStyle}" Text="{Binding Donor.Email, Mode=TwoWay}" />
-            </StackLayout>
-
-            <StackLayout Grid.Row="5" Grid.ColumnSpan="6">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Areas of Interest" />
-                <StackLayout Orientation="Horizontal">
-                    <!--<controls:CheckBox Text="Becoming a volunteer" Type="Material"/>-->
+                <StackLayout
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="First Name" />
+                    <Entry
+                        x:Name="FirstName"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.FirstName, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference LastName}" />
+                        </Entry.Behaviors>
+                    </Entry>
                 </StackLayout>
-            </StackLayout>
 
-            <StackLayout
-                Grid.Row="8"
-                Grid.Column="0"
-                Grid.ColumnSpan="6"
-                Orientation="Vertical"
-                Spacing="1">
-                <Label Style="{StaticResource LabelPromptStyle}" Text="Other Information" />
-                <Frame
-                    Padding="0"
-                    BorderColor="LightGray"
-                    HasShadow="False">
-                    <Editor
-                        AutoSize="TextChanges"
-                        Placeholder="Enter other information here"
-                        Style="{StaticResource EditorStyle}"
+                <StackLayout
+                    Grid.Row="0"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="3"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Last Name" />
+                    <Entry
+                        x:Name="LastName"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.LastName, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference Address1}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Address" />
+                    <Entry
+                        x:Name="Address1"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.Address1, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference Address2}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Address line 2" />
+                    <Entry
+                        x:Name="Address2"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.Address2, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference City}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="City" />
+                    <Entry
+                        x:Name="City"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.City, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference State}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="3"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="State" />
+                    <Entry
+                        x:Name="State"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.State, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference Zip}" />
+                        </Entry.Behaviors>
+
+                    </Entry>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="3"
+                    Grid.Column="4"
+                    Grid.ColumnSpan="2"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Zip code" />
+                    <Entry
+                        x:Name="Zip"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.Zip, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference Phone}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Phone number" />
+                    <Entry
+                        x:Name="Phone"
+                        Keyboard="Telephone"
+                        Style="{StaticResource LabelEntryStyle}"
+                        Text="{Binding Donor.Phone, Mode=TwoWay}">
+                        <Entry.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference Email}" />
+                        </Entry.Behaviors>
+                    </Entry>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="4"
+                    Grid.Column="3"
+                    Grid.ColumnSpan="3"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Email" />
+                    <Entry
+                        x:Name="Email"
+                        Keyboard="Email"
+                        Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.Email, Mode=TwoWay}" />
-                </Frame>
-            </StackLayout>
-        </Grid>
-        <Button
-            Command="{Binding SubmitCommand}"
-            Style="{StaticResource ButtonStyle}"
-            Text="Submit"
-            Visual="Material" />
-    </StackLayout>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Areas of Interest" />
+                    <StackLayout Orientation="Horizontal">
+                        <controls:CheckBox
+                            HorizontalOptions="FillAndExpand"
+                            IsChecked="{Binding Donor.BecomeAVolunteer}"
+                            Text="Becoming a volunteer"
+                            Type="Material" />
+                        <controls:CheckBox
+                            HorizontalOptions="FillAndExpand"
+                            IsChecked="{Binding Donor.BecomeMonthlyDonor}"
+                            Text="Becoming Monthly Donor"
+                            Type="Material" />
+                        <controls:CheckBox
+                            HorizontalOptions="FillAndExpand"
+                            IsChecked="{Binding Donor.HostFundraiser}"
+                            Text="Host Fundraiser"
+                            Type="Material" />
+                        <controls:CheckBox
+                            HorizontalOptions="FillAndExpand"
+                            IsChecked="{Binding Donor.SponsorFundraiser}"
+                            Text="Sponsor Fundraiser"
+                            Type="Material" />
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="6"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6"
+                    Orientation="Horizontal">
+                    <controls:CheckBox
+                        HorizontalOptions="FillAndExpand"
+                        IsChecked="{Binding Donor.ReceiveNewsletter}"
+                        Text="Receive Newsletter"
+                        Type="Material" />
+                    <controls:CheckBox
+                        HorizontalOptions="FillAndExpand"
+                        IsChecked="{Binding Donor.ConnectOnSocialMedia}"
+                        Text="Connect on Social Media"
+                        Type="Material" />
+                    <controls:CheckBox
+                        HorizontalOptions="FillAndExpand"
+                        IsChecked="{Binding Donor.BecomeCorporateSponsor}"
+                        Text="Become Corporate Sponsor"
+                        Type="Material" />
+                    <controls:CheckBox
+                        HorizontalOptions="FillAndExpand"
+                        IsChecked="{Binding Donor.RaffleDonations}"
+                        Text="Raffle Donations"
+                        Type="Material" />
+                    <controls:CheckBox
+                        HorizontalOptions="FillAndExpand"
+                        IsChecked="{Binding Donor.Other}"
+                        Text="Other"
+                        Type="Material" />
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6"
+                    Orientation="Vertical"
+                    Spacing="1">
+                    <Label Style="{StaticResource LabelPromptStyle}" Text="Other Information" />
+                    <Frame
+                        Padding="0"
+                        BorderColor="LightGray"
+                        HasShadow="False">
+                        <Editor
+                            AutoSize="TextChanges"
+                            Placeholder="Enter other information here"
+                            Style="{StaticResource EditorStyle}"
+                            Text="{Binding Donor.Email, Mode=TwoWay}" />
+                    </Frame>
+                </StackLayout>
+            </Grid>
+            <Button
+                Command="{Binding SubmitCommand}"
+                Style="{StaticResource ButtonStyle}"
+                Text="Submit"
+                Visual="Material"
+                WidthRequest="200" />
+        </StackLayout>
+    </ScrollView>
 </ContentPage>

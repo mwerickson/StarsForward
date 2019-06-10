@@ -23,7 +23,8 @@
     <PackageReference Include="Realm.Database" Version="3.4.0" />
     <PackageReference Include="Rg.Plugins.Popup" Version="1.1.5.188" />
     <PackageReference Include="Xamarin.Forms" Version="4.0.0.482894" />  
-    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.1.0" />  
+    <PackageReference Include="Xamarin.Forms.InputKit" Version="3.0.11" />
   </ItemGroup>
 
   <ItemGroup>

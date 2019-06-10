@@ -21,9 +21,10 @@
 
         <StackLayout Padding="15,30,15,30" Orientation="Horizontal">
             <Button
-                Command="{Binding UpdateCommand}"
+                Command="{Binding ClearCommand}"
                 HorizontalOptions="CenterAndExpand"
-                Text="Update"
+                IsEnabled="{Binding ClearEnabled}"
+                Text="{Binding ClearText}"
                 Visual="Material" />
             <Button
                 Command="{Binding CollectCommand}"
@@ -44,12 +45,53 @@
             Color="#A7A9A8" />
 
         <Label FontSize="Large" Text="Donors List" />
-        <CollectionView ItemsSource="{Binding Event.Donors}" EmptyView="No donors for this event yet!">
-            <CollectionView.ItemTemplate>
+        <ListView ItemsSource="{Binding Donors}">
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Orientation="Vertical" />
+                    <ViewCell>
+                        <StackLayout Padding="15,10,15,10" Orientation="Vertical">
+                            <StackLayout Orientation="Horizontal">
+                                <Label FontSize="Medium" Text="{Binding FullName}" />
+                                <Label
+                                    FontSize="Medium"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding DateCreatedText, StringFormat='Collected: {0}'}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    FontSize="Small"
+                                    Text="{Binding FullAddress}"
+                                    TextColor="Gray" />
+                                <Label
+                                    FontSize="Medium"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding DateModifiedText, StringFormat='Modified: {0}'}" />
+                            </StackLayout>
+                            <StackLayout Orientation="Horizontal">
+                                <Label
+                                    FontSize="Small"
+                                    Text="{Binding ContactInfo}"
+                                    TextColor="Gray" />
+                                <Label
+                                    FontSize="Medium"
+                                    HorizontalOptions="EndAndExpand"
+                                    Text="{Binding DateExportedText, StringFormat='Exported: {0}'}" />
+                            </StackLayout>
+                            <BoxView
+                                HeightRequest="1"
+                                HorizontalOptions="FillAndExpand"
+                                Color="#A7A9A8" />
+                        </StackLayout>
+                        <ViewCell.ContextActions>
+                            <MenuItem
+                                Command="{Binding DeleteDonor}"
+                                CommandParameter="{Binding .}"
+                                IsDestructive="True"
+                                Text="Delete" />
+                        </ViewCell.ContextActions>
+                    </ViewCell>
                 </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+            </ListView.ItemTemplate>
+        </ListView>
     </StackLayout>
 </ContentPage>

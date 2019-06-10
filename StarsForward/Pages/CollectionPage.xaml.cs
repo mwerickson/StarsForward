@@ -16,5 +16,12 @@ namespace StarsForward.Pages
         {
             InitializeComponent();
         }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            FirstName.Focus();
+        }
     }
 }
