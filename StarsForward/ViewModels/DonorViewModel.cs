@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using FluentValidation;
 using Realms;
+using StarsForward.Enums;
 using StarsForward.Validators;
 
 namespace StarsForward.ViewModels
@@ -41,9 +42,18 @@ namespace StarsForward.ViewModels
         public bool RaffleDonations { get; set; }
         public bool Other { get; set; }
 
+        public string EventName { get; set; }
+
         public DateTimeOffset DateCreated { get; set; }
         public DateTimeOffset? DateModified { get; set; }
         public DateTimeOffset? DateExported { get; set; }
+
+        public int RecordStatusRaw { get; set; }
+        public RecordStatusType RecordStatus
+        {
+            get => (RecordStatusType)RecordStatusRaw;
+            set => RecordStatusRaw = (int)value;
+        }
 
         public List<string> ValidationMessages { get; set; }
 

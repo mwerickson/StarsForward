@@ -97,5 +97,46 @@ namespace StarsForward.Data.Repositories
             });
 
         }
+
+        public void Update(Donor entity)
+        {
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                var donor = db.Find<Donor>(entity.Id);
+                donor.DateExported = entity.DateExported;
+                donor.DateModified = DateTimeOffset.Now;
+                donor.AdditionalInformation = entity.AdditionalInformation;
+                donor.Address1 = entity.Address1;
+                donor.Address2 = entity.Address2;
+                donor.BecomeAVolunteer = entity.BecomeAVolunteer;
+                donor.BecomeCorporateSponsor = entity.BecomeCorporateSponsor;
+                donor.BecomeMonthlyDonor = entity.BecomeMonthlyDonor;
+                donor.BecomeAVolunteer = entity.BecomeAVolunteer;
+                donor.City = entity.City;
+                donor.ConnectOnSocialMedia = entity.ConnectOnSocialMedia;
+                donor.Email = entity.Email;
+                donor.FirstName = entity.FirstName;
+                donor.HostFundraiser = entity.HostFundraiser;
+                donor.LastName = entity.LastName;
+                donor.Other = entity.Other;
+                donor.Phone = entity.Phone;
+                donor.RaffleDonations = entity.RaffleDonations;
+                donor.ReceiveNewsletter = entity.ReceiveNewsletter;
+                donor.SponsorFundraiser = entity.SponsorFundraiser;
+                donor.State = entity.State;
+                donor.Zip = entity.Zip;
+            });
+        }
+
+        public void ResetExportDate(Donor entity)
+        {
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                var donor = db.Find<Donor>(entity.Id);
+                donor.DateExported = null;
+            });
+        }
     }
 }

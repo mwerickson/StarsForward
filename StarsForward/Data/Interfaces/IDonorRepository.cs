@@ -8,5 +8,7 @@ namespace StarsForward.Data.Interfaces
     {
         void AddToEvent(Event e, Donor entity);
         void Exported(List<Donor> entities);
+        void Update(Donor entity);
+        void ResetExportDate(Donor entity);
     }
 }

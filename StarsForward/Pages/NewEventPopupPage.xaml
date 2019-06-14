@@ -49,7 +49,10 @@
                     Orientation="Vertical"
                     Spacing="0">
                     <Label Text="Start Date" />
-                    <DatePicker Date="{Binding Event.StartDatePicked, Mode=TwoWay}" />
+                    <DatePicker
+                        x:Name="StartDate"
+                        Date="{Binding Event.StartDatePicked, Mode=TwoWay}"
+                        MinimumDate="{Binding MinDate}" />
                 </StackLayout>
 
                 <StackLayout
@@ -57,15 +60,17 @@
                     Orientation="Vertical"
                     Spacing="0">
                     <Label Text="End Date" />
-                    <DatePicker Date="{Binding Event.EndDatePicked, Mode=TwoWay}" />
+                    <DatePicker Date="{Binding Event.EndDatePicked, Mode=TwoWay}" MinimumDate="{Binding Event.StartDatePicked}" />
                 </StackLayout>
 
                 <StackLayout Padding="0,15,0,15" Orientation="Horizontal">
                     <Button
+                        Padding="10,0,10,0"
                         Command="{Binding SaveCommand}"
                         HorizontalOptions="CenterAndExpand"
                         Text="Save" />
                     <Button
+                        Padding="10,0,10,0"
                         Command="{Binding CancelCommand}"
                         HorizontalOptions="CenterAndExpand"
                         Text="Cancel" />

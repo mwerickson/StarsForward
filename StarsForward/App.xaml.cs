@@ -20,6 +20,7 @@ namespace StarsForward
 
             ConfigureIOC();
             CreateObjectMaps();
+
             MainPage = LoadMasterDetail();
         }
 

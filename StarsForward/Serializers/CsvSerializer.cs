@@ -35,11 +35,23 @@ namespace StarsForward.Serializers
 
                 foreach (var item in items)
                 {
-                    var row = props
-                        .Where(x => x.Name != "Id")
-                        .Select(n => n.GetValue(item, null))
-                        .Select(n => n == null ? "null" : n.ToString())
-                        .Aggregate((a, b) => a + delimiter + b);
+                    string row = string.Empty;
+                    if (item is string)
+                    {
+                        row = props
+                            .Where(x => x.Name != "Id")
+                            .Select(n => n.GetValue(item, null))
+                            .Select(n => n == null ? "null" : "\"" + n.ToString() + "\"")
+                            .Aggregate((a, b) => a + delimiter + b);
+                    }
+                    else
+                    {
+                        row = props
+                            .Where(x => x.Name != "Id")
+                            .Select(n => n.GetValue(item, null))
+                            .Select(n => n == null ? "null" : n.ToString())
+                            .Aggregate((a, b) => a + delimiter + b);
+                    }
                     sw.WriteLine(row);
                 }
                 output = sw.ToString();

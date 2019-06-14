@@ -25,8 +25,10 @@ namespace StarsForward.PageModels
             _eventRepository = eventRepository;
         }
 
-        public string Title { get; set; } = "New Event";
+        public string Title => IsEdit ? "Edit Event" : "New Event";
         public EventViewModel Event { get; set; }
+        public DateTime MinDate => DateTime.Now.AddMonths(-1);
+        public bool IsEdit { get; set; }
 
 
         #region COMMANDS
@@ -48,7 +50,14 @@ namespace StarsForward.PageModels
                     Event.StartDate = Event.StartDatePicked;
                     Event.EndDate = Event.EndDatePicked;
                     var model = _mapper.Map<Event>(Event);
-                    _eventRepository.Add(model);
+                    if (IsEdit)
+                    {
+                        _eventRepository.Update(model);
+                    }
+                    else
+                    {
+                        _eventRepository.Add(model);
+                    }
 
                     UserDialogs.Instance.Toast("Event has been saved successfully!");
 
@@ -66,6 +75,12 @@ namespace StarsForward.PageModels
         public override void Init(object initData)
         {
             Event = new EventViewModel();
+
+            if (initData is EventViewModel model)
+            {
+                IsEdit = true;
+                Event = model;
+            }
         }
 
         protected override void ViewIsAppearing(object sender, EventArgs e)

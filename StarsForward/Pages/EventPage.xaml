@@ -5,33 +5,42 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    x:Name="Page"
     mc:Ignorable="d">
 
     <StackLayout Padding="15,25,15,0" Orientation="Vertical">
-        <Label
-            FontAttributes="Bold"
-            FontSize="Large"
-            HorizontalOptions="CenterAndExpand"
-            Text="{Binding Event.Name}" />
-        <Label
-            FontSize="Medium"
-            HorizontalOptions="CenterAndExpand"
-            Text="{Binding Event.EventDatesText}"
-            TextColor="Gray" />
+        <StackLayout Orientation="Vertical">
+            <Label
+                FontAttributes="Bold"
+                FontSize="Large"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Event.Name}" />
+            <Label
+                FontSize="Medium"
+                HorizontalOptions="CenterAndExpand"
+                Text="{Binding Event.EventDatesText}"
+                TextColor="Gray" />
+            <StackLayout.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding EditEventCommand}" />
+            </StackLayout.GestureRecognizers>
+        </StackLayout>
 
-        <StackLayout Padding="15,30,15,30" Orientation="Horizontal">
+        <StackLayout Padding="0,30,0,30" Orientation="Horizontal">
             <Button
+                Padding="10,0,10,0"
                 Command="{Binding ClearCommand}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding ClearEnabled}"
                 Text="{Binding ClearText}"
                 Visual="Material" />
             <Button
+                Padding="10,0,10,0"
                 Command="{Binding CollectCommand}"
                 HorizontalOptions="CenterAndExpand"
                 Text="Start Collecting"
                 Visual="Material" />
             <Button
+                Padding="10,0,10,0"
                 Command="{Binding ExportCommand}"
                 HorizontalOptions="CenterAndExpand"
                 IsEnabled="{Binding ExportEnabled}"
@@ -45,7 +54,11 @@
             Color="#A7A9A8" />
 
         <Label FontSize="Large" Text="Donors List" />
-        <ListView ItemsSource="{Binding Donors}">
+        <ListView
+            HasUnevenRows="True"
+            ItemsSource="{Binding Donors}"
+            SelectedItem="{Binding SelectedDonor, Mode=TwoWay}"
+            SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -53,7 +66,7 @@
                             <StackLayout Orientation="Horizontal">
                                 <Label FontSize="Medium" Text="{Binding FullName}" />
                                 <Label
-                                    FontSize="Medium"
+                                    FontSize="Small"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding DateCreatedText, StringFormat='Collected: {0}'}" />
                             </StackLayout>
@@ -63,7 +76,7 @@
                                     Text="{Binding FullAddress}"
                                     TextColor="Gray" />
                                 <Label
-                                    FontSize="Medium"
+                                    FontSize="Small"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding DateModifiedText, StringFormat='Modified: {0}'}" />
                             </StackLayout>
@@ -73,7 +86,7 @@
                                     Text="{Binding ContactInfo}"
                                     TextColor="Gray" />
                                 <Label
-                                    FontSize="Medium"
+                                    FontSize="Small"
                                     HorizontalOptions="EndAndExpand"
                                     Text="{Binding DateExportedText, StringFormat='Exported: {0}'}" />
                             </StackLayout>
@@ -84,10 +97,15 @@
                         </StackLayout>
                         <ViewCell.ContextActions>
                             <MenuItem
-                                Command="{Binding DeleteDonor}"
+                                Command="{Binding Path=BindingContext.DeleteDonor, Source={x:Reference Name=Page}}"
                                 CommandParameter="{Binding .}"
                                 IsDestructive="True"
                                 Text="Delete" />
+                            <MenuItem
+                                Command="{Binding Path=BindingContext.ResetExportCommand, Source={x:Reference Name=Page}}"
+                                CommandParameter="{Binding .}"
+                                IsDestructive="False"
+                                Text="Reset" />
                         </ViewCell.ContextActions>
                     </ViewCell>
                 </DataTemplate>

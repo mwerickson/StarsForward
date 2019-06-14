@@ -9,6 +9,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Command="{Binding SubmitCommand}" Text="Save" />
+        <ToolbarItem Command="{Binding ClearCommand}" Text="Clear" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Resources>
         <ResourceDictionary>
             <Style x:Key="LabelPromptStyle" TargetType="Label">
@@ -20,6 +25,9 @@
             <Style x:Key="EditorStyle" TargetType="Editor">
                 <Setter Property="Editor.HeightRequest" Value="150" />
             </Style>
+            <Style x:Key="PickerStyle" TargetType="Picker">
+                <Setter Property="HeightRequest" Value="50" />
+            </Style>
             <Style x:Key="ButtonStyle" TargetType="Button">
                 <Setter Property="Button.BackgroundColor" Value="#003366" />
                 <Setter Property="Button.TextColor" Value="White" />
@@ -29,17 +37,18 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ScrollView>
-        <StackLayout Orientation="Vertical">
-            <Image HorizontalOptions="CenterAndExpand" Source="logo.png">
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ExitCollectionCommand}" NumberOfTapsRequired="4" />
-                </Image.GestureRecognizers>
-            </Image>
+    <StackLayout Orientation="Vertical">
+        <Image HorizontalOptions="CenterAndExpand" Source="logo.png">
+            <Image.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding ExitCollectionCommand}" NumberOfTapsRequired="4" />
+            </Image.GestureRecognizers>
+        </Image>
+        <ScrollView>
+
             <Grid
                 Padding="25"
                 HorizontalOptions="FillAndExpand"
-                RowSpacing="30">
+                RowSpacing="25">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -69,6 +78,7 @@
                     <Label Style="{StaticResource LabelPromptStyle}" Text="First Name" />
                     <Entry
                         x:Name="FirstName"
+                        IsSpellCheckEnabled="False"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.FirstName, Mode=TwoWay}">
                         <Entry.Behaviors>
@@ -86,6 +96,7 @@
                     <Label Style="{StaticResource LabelPromptStyle}" Text="Last Name" />
                     <Entry
                         x:Name="LastName"
+                        IsSpellCheckEnabled="False"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.LastName, Mode=TwoWay}">
                         <Entry.Behaviors>
@@ -103,6 +114,7 @@
                     <Label Style="{StaticResource LabelPromptStyle}" Text="Address" />
                     <Entry
                         x:Name="Address1"
+                        IsSpellCheckEnabled="False"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.Address1, Mode=TwoWay}">
                         <Entry.Behaviors>
@@ -120,6 +132,7 @@
                     <Label Style="{StaticResource LabelPromptStyle}" Text="Address line 2" />
                     <Entry
                         x:Name="Address2"
+                        IsSpellCheckEnabled="False"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.Address2, Mode=TwoWay}">
                         <Entry.Behaviors>
@@ -137,6 +150,7 @@
                     <Label Style="{StaticResource LabelPromptStyle}" Text="City" />
                     <Entry
                         x:Name="City"
+                        IsSpellCheckEnabled="False"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.City, Mode=TwoWay}">
                         <Entry.Behaviors>
@@ -152,15 +166,27 @@
                     Orientation="Vertical"
                     Spacing="1">
                     <Label Style="{StaticResource LabelPromptStyle}" Text="State" />
-                    <Entry
+                    <Picker
                         x:Name="State"
+                        Title="Pick a State"
+                        ItemsSource="{Binding States}"
+                        SelectedItem="{Binding Donor.State, Mode=TwoWay}"
+                        Style="{StaticResource PickerStyle}"
+                        TitleColor="{StaticResource NavigationPrimary}">
+                        <!--<Picker.Behaviors>
+                            <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference Zip}" />
+                        </Picker.Behaviors>-->
+                    </Picker>
+                    <!--<Entry
+                        x:Name="State"
+                        IsSpellCheckEnabled="False"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.State, Mode=TwoWay}">
                         <Entry.Behaviors>
                             <behaviors:FocusOnReturnBehavior FocusOn="{x:Reference Zip}" />
                         </Entry.Behaviors>
 
-                    </Entry>
+                    </Entry>-->
                 </StackLayout>
 
                 <StackLayout
@@ -172,6 +198,7 @@
                     <Label Style="{StaticResource LabelPromptStyle}" Text="Zip code" />
                     <Entry
                         x:Name="Zip"
+                        IsSpellCheckEnabled="False"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.Zip, Mode=TwoWay}">
                         <Entry.Behaviors>
@@ -207,6 +234,7 @@
                     <Label Style="{StaticResource LabelPromptStyle}" Text="Email" />
                     <Entry
                         x:Name="Email"
+                        IsSpellCheckEnabled="False"
                         Keyboard="Email"
                         Style="{StaticResource LabelEntryStyle}"
                         Text="{Binding Donor.Email, Mode=TwoWay}" />
@@ -233,11 +261,6 @@
                             IsChecked="{Binding Donor.HostFundraiser}"
                             Text="Host Fundraiser"
                             Type="Material" />
-                        <controls:CheckBox
-                            HorizontalOptions="FillAndExpand"
-                            IsChecked="{Binding Donor.SponsorFundraiser}"
-                            Text="Sponsor Fundraiser"
-                            Type="Material" />
                     </StackLayout>
                 </StackLayout>
 
@@ -248,6 +271,11 @@
                     Orientation="Horizontal">
                     <controls:CheckBox
                         HorizontalOptions="FillAndExpand"
+                        IsChecked="{Binding Donor.SponsorFundraiser}"
+                        Text="Sponsor Fundraiser"
+                        Type="Material" />
+                    <controls:CheckBox
+                        HorizontalOptions="FillAndExpand"
                         IsChecked="{Binding Donor.ReceiveNewsletter}"
                         Text="Receive Newsletter"
                         Type="Material" />
@@ -256,6 +284,13 @@
                         IsChecked="{Binding Donor.ConnectOnSocialMedia}"
                         Text="Connect on Social Media"
                         Type="Material" />
+                </StackLayout>
+
+                <StackLayout
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="6"
+                    Orientation="Horizontal">
                     <controls:CheckBox
                         HorizontalOptions="FillAndExpand"
                         IsChecked="{Binding Donor.BecomeCorporateSponsor}"
@@ -274,7 +309,7 @@
                 </StackLayout>
 
                 <StackLayout
-                    Grid.Row="7"
+                    Grid.Row="8"
                     Grid.Column="0"
                     Grid.ColumnSpan="6"
                     Orientation="Vertical"
@@ -288,16 +323,17 @@
                             AutoSize="TextChanges"
                             Placeholder="Enter other information here"
                             Style="{StaticResource EditorStyle}"
-                            Text="{Binding Donor.Email, Mode=TwoWay}" />
+                            Text="{Binding Donor.AdditionalInformation, Mode=TwoWay}" />
                     </Frame>
                 </StackLayout>
             </Grid>
-            <Button
-                Command="{Binding SubmitCommand}"
-                Style="{StaticResource ButtonStyle}"
-                Text="Submit"
-                Visual="Material"
-                WidthRequest="200" />
-        </StackLayout>
-    </ScrollView>
+        </ScrollView>
+
+        <!--<Button
+            Command="{Binding SubmitCommand}"
+            Style="{StaticResource ButtonStyle}"
+            Text="Submit"
+            Visual="Material"
+            WidthRequest="200" />-->
+    </StackLayout>
 </ContentPage>

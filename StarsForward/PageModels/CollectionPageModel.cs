@@ -9,6 +9,7 @@ using Realms;
 using StarsForward.Data.Interfaces;
 using StarsForward.Data.Models;
 using StarsForward.Extensions;
+using StarsForward.Messages;
 using StarsForward.ViewModels;
 using Xamarin.Forms;
 
@@ -30,6 +31,8 @@ namespace StarsForward.PageModels
         public EventViewModel Event { get; set; }
 
         public string Message { get; set; }
+
+        public List<string> States { get; set; }
 
 
         #region COMMANDS
@@ -75,14 +78,16 @@ namespace StarsForward.PageModels
             }
         }
 
+        public Command ClearCommand => new Command(ClearForm);
+
         #endregion
 
 
         private void ClearForm()
         {
             Donor = new DonorViewModel();
+            MessagingCenter.Send(new ResetFormMessage(), ResetFormMessage.Message);
         }
-
 
 
         // OVERRIDES
@@ -90,10 +95,13 @@ namespace StarsForward.PageModels
         {
             ClearForm();
 
+            States = Data.States.Names();
+
             if (initData is EventViewModel model)
             {
                 Event = model;
             }
+
         }
 
         protected override void ViewIsAppearing(object sender, EventArgs e)

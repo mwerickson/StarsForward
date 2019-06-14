@@ -4,6 +4,7 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace StarsForward.iOS
@@ -24,6 +25,7 @@ namespace StarsForward.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             Forms.SetFlags("CollectionView_Experimental");
+            ExperimentalFeatures.Enable(ExperimentalFeatures.EmailAttachments);
             Rg.Plugins.Popup.Popup.Init();
             Plugin.InputKit.Platforms.iOS.Config.Init();
 

@@ -90,5 +90,20 @@ namespace StarsForward.Data.Repositories
 
             return i;
         }
+
+        public void Update(Event entity)
+        {
+            var db = RealmHelper.GetInstance();
+            db.Write(() =>
+            {
+                var e = db.Find<Event>(entity.Id);
+                if (e != null)
+                {
+                    e.Name = entity.Name;
+                    e.StartDate = entity.StartDate;
+                    e.EndDate = entity.EndDate;
+                }
+            });
+        }
     }
 }
